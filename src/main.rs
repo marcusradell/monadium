@@ -1,29 +1,11 @@
-use axum::{response::Html, routing::get, Router};
-use dioxus::prelude::*;
-
-async fn app_endpoint() -> Html<String> {
-    fn app(cx: Scope) -> Element {
-        cx.render(rsx!(div { "hello world" }))
-    }
-
-    let mut app = VirtualDom::new(app);
-
-    let _ = app.rebuild();
-
-    Html(dioxus_ssr::render(&app))
-}
+use axum::{routing::get, Router};
 
 #[tokio::main]
 async fn main() {
-    let addr = std::net::SocketAddr::from(([0, 0, 0, 0], 3000));
-    println!("listening on http://{}", addr);
+    let app = Router::new().route("/", get(|| async { "Hello, World!" }));
 
-    axum::Server::bind(&addr)
-        .serve(
-            Router::new()
-                .route("/", get(app_endpoint))
-                .into_make_service(),
-        )
+    axum::Server::bind(&"0.0.0.0:3000".parse().unwrap())
+        .serve(app.into_make_service())
         .await
         .unwrap();
 }
