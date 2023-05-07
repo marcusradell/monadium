@@ -2,10 +2,15 @@ use axum::{response::Html, routing::get, Router};
 use dioxus::prelude::*;
 
 async fn app_endpoint() -> Html<String> {
-    // render the rsx! macro to HTML
-    Html(dioxus_ssr::render_lazy(rsx! {
-        div { "hello world!" }
-    }))
+    fn app(cx: Scope) -> Element {
+        cx.render(rsx!(div { "hello world" }))
+    }
+
+    let mut app = VirtualDom::new(app);
+
+    let _ = app.rebuild();
+
+    Html(dioxus_ssr::render(&app))
 }
 
 #[tokio::main]
