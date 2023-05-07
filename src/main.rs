@@ -1,11 +1,24 @@
-use axum::{routing::get, Router};
+use axum::{response::Html, routing::get, Router};
+use dioxus::prelude::*;
+
+async fn app_endpoint() -> Html<String> {
+    // render the rsx! macro to HTML
+    Html(dioxus_ssr::render_lazy(rsx! {
+        div { "hello world!" }
+    }))
+}
 
 #[tokio::main]
 async fn main() {
-    let app = Router::new().route("/", get(|| async { "Hello, World!" }));
+    let addr = std::net::SocketAddr::from(([127, 0, 0, 1], 3000));
+    println!("listening on http://{}", addr);
 
-    axum::Server::bind(&"0.0.0.0:3000".parse().unwrap())
-        .serve(app.into_make_service())
+    axum::Server::bind(&addr)
+        .serve(
+            Router::new()
+                .route("/", get(app_endpoint))
+                .into_make_service(),
+        )
         .await
         .unwrap();
 }
