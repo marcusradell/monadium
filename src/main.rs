@@ -14,11 +14,11 @@ async fn app_endpoint() -> Html<String> {
                 Module {
                     title: "Introduction"
                     Study {
-                        Challenge{
+                        Challenge {
                             title: "Hi!",
                             assignment: "Write a program that outputs 'Hi!'."
                         }
-                        Challenge{
+                        Challenge {
                             title: "Variables",
                             assignment: "Declare immutable, mutable, constant, and shadowed variables."
                         }
