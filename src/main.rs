@@ -1,23 +1,11 @@
 #![allow(non_snake_case)]
 
+mod components;
+
 use axum::{response::Html, routing::get, Router};
 use dioxus::prelude::*;
 
-pub fn HeroHeader(cx: Scope) -> Element {
-    cx.render(rsx!(h1 {"Monadium.org"}))
-}
-
-pub fn PageHeader(cx: Scope) -> Element {
-    cx.render(rsx!(h2 {"Learning programming fundamentals with Rust"}))
-}
-
-pub fn ChapterHeader(cx: Scope) -> Element {
-    cx.render(rsx!(h3 {"Challenge 1"}))
-}
-
-pub fn ParagraphHeader(cx: Scope) -> Element {
-    cx.render(rsx!(p {"Run code with Rust"}))
-}
+use crate::components::{Challenge, HeroHeader, PageHeader};
 
 #[derive(PartialEq, Props)]
 pub struct CodeContentProps {
@@ -36,11 +24,7 @@ async fn app_endpoint() -> Html<String> {
         .to_string();
 
         cx.render(rsx!(div {
-            HeroHeader {}
-            PageHeader {}
-            ChapterHeader {}
-            ParagraphHeader {}
-            CodeContent{content: content}}))
+            Challenge{title: "Hi!".to_string(), assignment: "Write a program that outputs 'Hi!'.".to_string()}}))
     }
 
     let mut app = VirtualDom::new(app);
