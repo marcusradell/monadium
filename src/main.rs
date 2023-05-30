@@ -12,14 +12,15 @@ async fn app_endpoint() -> Html<String> {
             Course {
                 title: "Learning programming fundamentals with Rust"
                 Module {
+                    title: "Introduction"
                     Study {
                         Challenge{
-                            title: "Hi!".to_string(),
-                            assignment: "Write a program that outputs 'Hi!'.".to_string()
+                            title: "Hi!",
+                            assignment: "Write a program that outputs 'Hi!'."
                         }
                         Challenge{
-                            title: "Variables".to_string(),
-                            assignment: "Declare immutable, mutable, constant, and shadowed variables.".to_string()
+                            title: "Variables",
+                            assignment: "Declare immutable, mutable, constant, and shadowed variables."
                         }
                     }
                 }

@@ -1,17 +1,17 @@
 use dioxus::prelude::*;
 
-use crate::components::ChapterHeader;
+use crate::components::ChapterTitle;
 
 #[derive(PartialEq, Props)]
-pub struct Props {
-    pub title: String,
-    pub assignment: String,
+pub struct Props<'a> {
+    pub title: &'a str,
+    pub assignment: &'a str,
 }
 
-pub fn Challenge(cx: Scope<Props>) -> Element {
+pub fn Challenge<'a>(cx: Scope<'a, Props<'a>>) -> Element {
     cx.render(rsx!(
     div {
-        ChapterHeader {text: cx.props.title.clone()}
+        ChapterTitle {title: cx.props.title}
         div {"{cx.props.assignment}"}
     }))
 }
