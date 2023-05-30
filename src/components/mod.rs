@@ -6,3 +6,6 @@ pub use headers::*;
 
 mod study;
 pub use study::*;
+
+mod module;
+pub use module::*;
