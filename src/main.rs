@@ -2,25 +2,27 @@
 
 mod components;
 
-use crate::components::{Challenge, Module, PageTitle, Study};
+use crate::components::{Challenge, Course, Module, PageTitle, Study};
 use axum::{response::Html, routing::get, Router};
 use dioxus::prelude::*;
 
 async fn app_endpoint() -> Html<String> {
     fn app(cx: Scope) -> Element {
         cx.render(rsx!(
-            Module {
+            Course {
                 PageTitle{
                     text: "Learning programming fundamentals with Rust".to_string()
                 }
-                Study {
-                    Challenge{
-                        title: "Hi!".to_string(),
-                        assignment: "Write a program that outputs 'Hi!'.".to_string()
-                    }
-                    Challenge{
-                        title: "Variables".to_string(),
-                        assignment: "Declare immutable, mutable, constant, and shadowed variables.".to_string()
+                Module {
+                    Study {
+                        Challenge{
+                            title: "Hi!".to_string(),
+                            assignment: "Write a program that outputs 'Hi!'.".to_string()
+                        }
+                        Challenge{
+                            title: "Variables".to_string(),
+                            assignment: "Declare immutable, mutable, constant, and shadowed variables.".to_string()
+                        }
                     }
                 }
             }
