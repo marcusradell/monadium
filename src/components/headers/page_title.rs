@@ -1,10 +1,10 @@
 use dioxus::prelude::*;
 
 #[derive(Props, PartialEq)]
-pub struct Props {
-    text: String,
+pub struct Props<'a> {
+    title: &'a str,
 }
 
-pub fn PageTitle(cx: Scope<Props>) -> Element {
-    cx.render(rsx!(h1 {"{cx.props.text}"}))
+pub fn PageTitle<'a>(cx: Scope<'a, Props<'a>>) -> Element {
+    cx.render(rsx!(h1 {"{cx.props.title}"}))
 }
