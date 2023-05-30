@@ -2,7 +2,7 @@
 
 mod components;
 
-use crate::components::{Challenge, CourseTitle, Module, Study};
+use crate::components::{Challenge, Module, PageTitle, Study};
 use axum::{response::Html, routing::get, Router};
 use dioxus::prelude::*;
 
@@ -10,7 +10,7 @@ async fn app_endpoint() -> Html<String> {
     fn app(cx: Scope) -> Element {
         cx.render(rsx!(
             Module {
-                CourseTitle{
+                PageTitle{
                     text: "Learning programming fundamentals with Rust".to_string()
                 }
                 Study {
