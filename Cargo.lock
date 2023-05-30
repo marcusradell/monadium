@@ -47,6 +47,7 @@ dependencies = [
  "axum",
  "dioxus",
  "dioxus-ssr",
+ "serde_json",
  "tokio",
 ]
 
