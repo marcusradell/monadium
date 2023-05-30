@@ -1,5 +1,10 @@
 use dioxus::prelude::*;
 
-pub fn PageHeader(cx: Scope) -> Element {
-    cx.render(rsx!(h2 {"Learning programming fundamentals with Rust"}))
+#[derive(Props, PartialEq)]
+pub struct Props {
+    text: String,
+}
+
+pub fn PageHeader(cx: Scope<Props>) -> Element {
+    cx.render(rsx!(h1 {"{cx.props.text}"}))
 }

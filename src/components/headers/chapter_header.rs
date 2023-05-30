@@ -6,5 +6,5 @@ pub struct Props {
 }
 
 pub fn ChapterHeader(cx: Scope<Props>) -> Element {
-    cx.render(rsx!(h3 {"{cx.props.text}"}))
+    cx.render(rsx!(h2 {"{cx.props.text}"}))
 }

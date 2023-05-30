@@ -2,29 +2,22 @@
 
 mod components;
 
+use crate::components::{Challenge, PageHeader};
 use axum::{response::Html, routing::get, Router};
 use dioxus::prelude::*;
 
-use crate::components::{Challenge, HeroHeader, PageHeader};
-
-#[derive(PartialEq, Props)]
-pub struct CodeContentProps {
-    pub content: String,
-}
-
-pub fn CodeContent(cx: Scope<CodeContentProps>) -> Element {
-    cx.render(rsx!(pre {"{cx.props.content}"}))
-}
-
 async fn app_endpoint() -> Html<String> {
     fn app(cx: Scope) -> Element {
-        let content = "fn main() {
-    println!(&quot; Hello, world!&quot;); 
-}"
-        .to_string();
-
-        cx.render(rsx!(div {
-            Challenge{title: "Hi!".to_string(), assignment: "Write a program that outputs 'Hi!'.".to_string()}}))
+        cx.render(rsx!(
+        div {
+            PageHeader{
+                text: "Learning programming fundamentals with Rust".to_string()
+            }
+            Challenge{
+                title: "Hi!".to_string(),
+                assignment: "Write a program that outputs 'Hi!'.".to_string()
+            }
+        }))
     }
 
     let mut app = VirtualDom::new(app);
