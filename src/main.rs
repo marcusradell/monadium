@@ -2,14 +2,14 @@
 
 mod components;
 
-use crate::components::{Challenge, CourseTitle};
+use crate::components::{Challenge, CourseTitle, Study};
 use axum::{response::Html, routing::get, Router};
 use dioxus::prelude::*;
 
 async fn app_endpoint() -> Html<String> {
     fn app(cx: Scope) -> Element {
         cx.render(rsx!(
-        div {
+        Study {
             CourseTitle{
                 text: "Learning programming fundamentals with Rust".to_string()
             }
