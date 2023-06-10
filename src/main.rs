@@ -1,6 +1,7 @@
 #![allow(non_snake_case)]
 
 mod components;
+mod services;
 
 use axum::{response::Html, routing::get, Json, Router};
 use components::App;
@@ -32,14 +33,14 @@ async fn main() {
 
     let challenges_router = Router::new().route("/get_all", get(placeholder_endpoint));
 
-    let courses_router = Router::new().route("/get_all", get(placeholder_endpoint));
+    let courses_service = services::Courses::new();
 
-    let modules_router = Router::new().route("/get_all", get(placeholder_endpoint));
+    let modules_service = services::Modules::new();
 
     let api_router = Router::new()
         .nest("/challenges", challenges_router)
-        .nest("/courses", courses_router)
-        .nest("/modules", modules_router);
+        .nest("/courses", courses_service.router())
+        .nest("/modules", modules_service.router());
 
     let web_router = Router::new()
         .route("/", get(web_endpoint))
