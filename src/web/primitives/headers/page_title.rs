@@ -6,5 +6,8 @@ pub struct Props<'a> {
 }
 
 pub fn PageTitle<'a>(cx: Scope<'a, Props<'a>>) -> Element {
-    cx.render(rsx!(h1 {"{cx.props.title}"}))
+    cx.render(rsx!(
+    h1 {class:"text-2xl",
+        "{cx.props.title}"
+    }))
 }

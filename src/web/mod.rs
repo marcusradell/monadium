@@ -1,4 +1,5 @@
 mod app;
 pub use app::*;
 
-mod components;
+mod kits;
+pub mod primitives;

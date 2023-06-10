@@ -1,9 +1,10 @@
 #![allow(non_snake_case)]
 
-use axum::Router;
-
-mod kits;
+mod server;
 mod web;
+
+use axum::Router;
+use server::kits;
 
 #[tokio::main]
 async fn main() {

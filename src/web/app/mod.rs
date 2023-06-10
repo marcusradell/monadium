@@ -1,9 +1,19 @@
 use dioxus::prelude::*;
 
-use crate::web::components::{Challenge, Course, Module, Study};
+use crate::web::kits::{Challenge, Course, Module, Study};
+
+const BODY_STYLE: &str = r"
+    font-family: Arial, Helvetica, sans-serif;
+";
 
 pub fn App(cx: Scope) -> Element {
     cx.render(rsx!(
+        head {
+        title { "Monadium.org"}
+        script {src:"https://cdn.tailwindcss.com"}
+        }
+
+        body { style: BODY_STYLE, class: "bg-slate-900 text-slate-100",
         Course {
             title: "Programming Fundamentals with Rust"
             Module {
@@ -28,5 +38,6 @@ pub fn App(cx: Scope) -> Element {
                 }
             }
         }
+    }
     ))
 }

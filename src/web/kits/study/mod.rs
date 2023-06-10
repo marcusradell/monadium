@@ -1,6 +1,6 @@
 use dioxus::prelude::*;
 
-use super::PageTitle;
+use crate::web::primitives::SectionTitle;
 
 #[derive(Props)]
 pub struct Props<'a> {
@@ -8,13 +8,10 @@ pub struct Props<'a> {
     children: Element<'a>,
 }
 
-pub fn Course<'a>(cx: Scope<'a, Props<'a>>) -> Element {
+pub fn Study<'a>(cx: Scope<'a, Props<'a>>) -> Element {
     cx.render(rsx!(
-        PageTitle {
+        SectionTitle {
             title: cx.props.title
-        }
-        div {
-            &cx.props.children
-        }
+        } & cx.props.children
     ))
 }
