@@ -11,7 +11,7 @@ async fn status_endpoint() -> Json<Value> {
     Json(json!({"status": "READY"}))
 }
 
-async fn api_endpoint() -> Json<Value> {
+async fn placeholder_endpoint() -> Json<Value> {
     Json(json!({"ok": false, "code": "NOT_IMPLEMENTED"}))
 }
 
@@ -30,7 +30,16 @@ async fn main() {
 
     let status_router = Router::new().route("/", get(status_endpoint));
 
-    let api_router = Router::new().route("/", get(api_endpoint));
+    let challenges_router = Router::new().route("/get_all", get(placeholder_endpoint));
+
+    let courses_router = Router::new().route("/get_all", get(placeholder_endpoint));
+
+    let modules_router = Router::new().route("/get_all", get(placeholder_endpoint));
+
+    let api_router = Router::new()
+        .nest("/challenges", challenges_router)
+        .nest("/courses", courses_router)
+        .nest("/modules", modules_router);
 
     let web_router = Router::new()
         .route("/", get(web_endpoint))
