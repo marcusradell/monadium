@@ -12,6 +12,3 @@ pub use module::*;
 
 mod course;
 pub use course::*;
-
-mod app;
-pub use app::*;

@@ -1,1 +1,4 @@
-pub mod components;
+mod app;
+pub use app::*;
+
+mod components;
