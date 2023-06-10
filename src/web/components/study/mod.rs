@@ -1,6 +1,6 @@
 use dioxus::prelude::*;
 
-use crate::components::ChapterTitle;
+use crate::web::components::SectionTitle;
 
 #[derive(Props)]
 pub struct Props<'a> {
@@ -8,9 +8,9 @@ pub struct Props<'a> {
     children: Element<'a>,
 }
 
-pub fn Module<'a>(cx: Scope<'a, Props<'a>>) -> Element {
+pub fn Study<'a>(cx: Scope<'a, Props<'a>>) -> Element {
     cx.render(rsx!(
-        ChapterTitle {
+        SectionTitle {
             title: cx.props.title
         } & cx.props.children
     ))

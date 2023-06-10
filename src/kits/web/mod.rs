@@ -1,7 +1,7 @@
 use axum::{response::Html, routing::get, Router};
 use dioxus::prelude::VirtualDom;
 
-use crate::components::App;
+use crate::web::components::App;
 
 async fn web_endpoint() -> Html<String> {
     let mut app = VirtualDom::new(App);

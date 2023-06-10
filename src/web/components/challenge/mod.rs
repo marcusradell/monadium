@@ -1,6 +1,6 @@
 use dioxus::prelude::*;
 
-use crate::components::ChapterTitle;
+use crate::web::components::ChapterTitle;
 
 #[derive(PartialEq, Props)]
 pub struct Props<'a> {

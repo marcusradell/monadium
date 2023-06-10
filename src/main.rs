@@ -2,8 +2,8 @@
 
 use axum::Router;
 
-mod components;
 mod kits;
+mod web;
 
 #[tokio::main]
 async fn main() {

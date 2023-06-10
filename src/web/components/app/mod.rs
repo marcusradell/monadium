@@ -1,6 +1,6 @@
 use dioxus::prelude::*;
 
-use crate::components::{Challenge, Course, Module, Study};
+use crate::web::components::{Challenge, Course, Module, Study};
 
 pub fn App(cx: Scope) -> Element {
     cx.render(rsx!(
