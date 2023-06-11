@@ -20,7 +20,7 @@ pub fn App(cx: Scope) -> Element {
         script {src:"https://cdn.tailwindcss.com"}
         }
 
-        body { style: BODY_STYLE, class: "font-sans bg-slate-900 text-slate-100",
+        body { style: BODY_STYLE, class: "font-sans bg-stone-900 text-stone-100",
         Course {
             title: "Programming Fundamentals with Rust"
             Module {
