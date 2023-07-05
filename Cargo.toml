@@ -9,5 +9,9 @@ edition = "2021"
 axum = "0.6.18"
 dioxus = "0.3.2"
 dioxus-ssr = "0.3.0"
+dotenvy = "0.15.7"
 serde_json = "1.0.96"
+sqlx = { version = "0.7.0", features = ["runtime-tokio", "tls-rustls", "postgres", "migrate", "macros", "uuid", "json"] }
 tokio = { version = "1.28.0", features = ["macros", "rt-multi-thread", "full"] }
+tracing = "0.1.37"
+tracing-subscriber = "0.3.17"

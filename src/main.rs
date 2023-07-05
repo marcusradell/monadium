@@ -3,11 +3,26 @@
 mod server;
 mod web;
 
+use crate::server::io;
 use axum::Router;
+use dotenvy::dotenv;
 use server::kits;
+use tracing::Level;
+use tracing_subscriber::FmtSubscriber;
 
 #[tokio::main]
 async fn main() {
+    dotenv().expect(".env file not found");
+
+    let subscriber = FmtSubscriber::builder()
+        .with_max_level(Level::INFO)
+        .finish();
+
+    tracing::subscriber::set_global_default(subscriber)
+        .expect("Failed to set global default tracing subscriber.");
+
+    let _pool = io::db::init().await;
+
     let courses_kit = kits::Courses::new();
     let modules_kit = kits::Modules::new();
     let challenges_kit = kits::Challenges::new();
