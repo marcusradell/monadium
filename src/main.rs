@@ -7,7 +7,7 @@ use crate::server::io;
 use axum::Router;
 use dotenvy::dotenv;
 use server::kits;
-use tracing::Level;
+use tracing::{info, Level};
 use tracing_subscriber::FmtSubscriber;
 
 #[tokio::main]
@@ -42,11 +42,15 @@ async fn main() {
 
     let address = std::net::SocketAddr::from(([0, 0, 0, 0], 3000));
 
-    println!("Starting server on {}", address);
+    info!("Booting server on {}", address);
 
-    let app = axum::Server::bind(&address).serve(app_router.into_make_service());
+    let server = axum::Server::bind(&address).serve(app_router.into_make_service());
 
-    status_kit.set_value(kits::StatusValue::Ready).unwrap();
+    status_kit
+        .set_value(kits::StatusValue::Ready)
+        .expect("Failed to set server status.");
 
-    app.await.unwrap();
+    info!("Server ready.");
+
+    server.await.expect("Server failed.");
 }
