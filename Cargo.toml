@@ -14,7 +14,6 @@ serde = "1.0.167"
 serde_json = "1.0.96"
 shuttle-axum = "0.20.0"
 shuttle-runtime = "0.20.0"
-shuttle-secrets = "0.20.0"
 sqlx = { version = "0.7", features = ["runtime-tokio", "tls-rustls", "postgres", "migrate", "macros", "uuid", "json"] }
 tokio = { version = "1.28.0", features = ["macros", "rt-multi-thread", "full"] }
 tracing = "0.1.37"

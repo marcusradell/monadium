@@ -14,9 +14,7 @@ use tracing::info;
 // #[tokio::main]
 // async fn main() {
 #[shuttle_runtime::main]
-async fn shuttle(
-    #[shuttle_secrets::Secrets] secrets: shuttle_secrets::SecretStore,
-) -> shuttle_axum::ShuttleAxum {
+async fn shuttle() -> shuttle_axum::ShuttleAxum {
     dotenv().ok();
 
     // let subscriber = FmtSubscriber::builder()
