@@ -7,8 +7,6 @@ use crate::server::io::{self};
 use axum::Router;
 use server::kits;
 use tracing::info;
-// use tracing::{info, Level};
-// use tracing_subscriber::FmtSubscriber;
 
 // #[tokio::main]
 // async fn main() {
@@ -17,13 +15,6 @@ async fn shuttle(
     #[shuttle_secrets::Secrets] secrets: shuttle_secrets::SecretStore,
 ) -> shuttle_axum::ShuttleAxum {
     // dotenv().ok();
-
-    // let subscriber = FmtSubscriber::builder()
-    //     .with_max_level(Level::INFO)
-    //     .finish();
-
-    // tracing::subscriber::set_global_default(subscriber)
-    //     .expect("Failed to set global default tracing subscriber.");
 
     let db_url = secrets
         .get("DATABASE_URL")
