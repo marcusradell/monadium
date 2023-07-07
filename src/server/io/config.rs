@@ -23,6 +23,8 @@ impl Config {
         use dotenvy::dotenv;
         use std::env;
 
+        dotenv().ok();
+
         let database_url = env::var("DATABASE_URL").expect("Missing secret DATABASE_URL");
 
         let migrate_db = env::var("MIGRATE_DB").expect("Missing MIGRATE_DB") == "ON";
