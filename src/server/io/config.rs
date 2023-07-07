@@ -20,6 +20,7 @@ impl Config {
 
     #[cfg(not(feature = "shuttle"))]
     pub fn init() -> Self {
+        use dotenvy::dotenv;
         use std::env;
 
         let database_url = env::var("DATABASE_URL").expect("Missing secret DATABASE_URL");

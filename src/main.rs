@@ -12,10 +12,6 @@ use tracing::info;
 #[cfg(not(feature = "shuttle"))]
 #[tokio::main]
 async fn main() {
-    use dotenvy::dotenv;
-
-    dotenv().ok();
-
     io::tracing::init();
 
     let config = Config::init();
