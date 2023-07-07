@@ -7,19 +7,22 @@ use crate::server::io;
 use axum::Router;
 use dotenvy::dotenv;
 use server::kits;
-use tracing::{info, Level};
-use tracing_subscriber::FmtSubscriber;
+use tracing::info;
+// use tracing::{info, Level};
+// use tracing_subscriber::FmtSubscriber;
 
-#[tokio::main]
-async fn main() {
+// #[tokio::main]
+// async fn main() {
+#[shuttle_runtime::main]
+async fn shuttle() -> shuttle_axum::ShuttleAxum {
     dotenv().expect(".env file not found");
 
-    let subscriber = FmtSubscriber::builder()
-        .with_max_level(Level::INFO)
-        .finish();
+    // let subscriber = FmtSubscriber::builder()
+    //     .with_max_level(Level::INFO)
+    //     .finish();
 
-    tracing::subscriber::set_global_default(subscriber)
-        .expect("Failed to set global default tracing subscriber.");
+    // tracing::subscriber::set_global_default(subscriber)
+    //     .expect("Failed to set global default tracing subscriber.");
 
     let _pool = io::db::init().await;
 
@@ -40,11 +43,11 @@ async fn main() {
         .nest("/api", api_router)
         .nest("/", web_kit.router());
 
-    let address = std::net::SocketAddr::from(([0, 0, 0, 0], 3000));
+    // let address = std::net::SocketAddr::from(([0, 0, 0, 0], 3000));
 
-    info!("Booting server on {}", address);
+    // info!("Booting server on {}", address);
 
-    let server = axum::Server::bind(&address).serve(app_router.into_make_service());
+    // let server = axum::Server::bind(&address).serve(app_router.into_make_service());
 
     status_kit
         .set_value(kits::StatusValue::Ready)
@@ -52,5 +55,7 @@ async fn main() {
 
     info!("Server ready.");
 
-    server.await.expect("Server failed.");
+    // server.await.expect("Server failed.");
+
+    Ok(app_router.into())
 }
