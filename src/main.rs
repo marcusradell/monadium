@@ -44,8 +44,9 @@ async fn main() {
 
     println!("Starting server on {}", address);
 
-    axum::Server::bind(&address)
-        .serve(app_router.into_make_service())
-        .await
-        .unwrap();
+    let app = axum::Server::bind(&address).serve(app_router.into_make_service());
+
+    status_kit.set_value(kits::StatusValue::Ready).unwrap();
+
+    app.await.unwrap();
 }
