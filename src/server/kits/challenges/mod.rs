@@ -1,6 +1,9 @@
 use crate::io::result::Result;
 use crate::server::io::repo::Repo;
-use axum::{routing::get, Json, Router};
+use axum::{
+    routing::{get, post},
+    Json, Router,
+};
 use serde::Serialize;
 use sqlx::{query_as, types::Uuid};
 
@@ -32,14 +35,40 @@ impl ChallengesKit {
         Ok(rows)
     }
 
-    pub fn router(&self) -> Router {
-        Router::new().route(
-            "/get_all",
-            get({
-                let this = self.clone();
-
-                || async move { Json(this.get_all().await.unwrap()) }
-            }),
+    pub async fn add(&self, id: Uuid, name: String, content: String) -> Result<()> {
+        sqlx::query!(
+            "insert into challenges.challenges (id, name, content) values ($1, $2, $3)",
+            id,
+            name,
+            content
         )
+        .execute(self.repo.pool.as_ref())
+        .await?;
+
+        Ok(())
+    }
+
+    pub fn router(&self) -> Router {
+        Router::new()
+            .route(
+                "/get_all",
+                get({
+                    let this = self.clone();
+
+                    || async move { Json(this.get_all().await.unwrap()) }
+                }),
+            )
+            .route(
+                "/add",
+                post({
+                    let this = self.clone();
+
+                    || async move {
+                        this.add(Uuid::new_v4(), "Name".to_string(), "Content...".to_string())
+                            .await
+                            .unwrap()
+                    }
+                }),
+            )
     }
 }
