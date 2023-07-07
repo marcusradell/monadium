@@ -92,6 +92,7 @@ dependencies = [
  "axum",
  "dioxus",
  "dioxus-ssr",
+ "dotenvy",
  "serde",
  "serde_json",
  "shuttle-axum",

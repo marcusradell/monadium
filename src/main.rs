@@ -5,27 +5,58 @@ mod web;
 
 use crate::server::io;
 use axum::Router;
+use server::io::config::Config;
 use server::kits;
 use tracing::info;
 
 #[cfg(not(feature = "shuttle"))]
 #[tokio::main]
-async fn main() {}
+async fn main() {
+    use dotenvy::dotenv;
+
+    dotenv().ok();
+
+    io::tracing::init();
+
+    let config = Config::init();
+
+    let app_router = setup(config).await;
+
+    let address = std::net::SocketAddr::from(([0, 0, 0, 0], 3000));
+
+    info!("Booting server on {}", address);
+
+    let server = axum::Server::bind(&address).serve(app_router.into_make_service());
+
+    info!("Server ready.");
+
+    server.await.expect("Server failed.");
+}
 
 #[cfg(feature = "shuttle")]
 #[shuttle_runtime::main]
 async fn shuttle(
     #[shuttle_secrets::Secrets] secrets: shuttle_secrets::SecretStore,
 ) -> shuttle_axum::ShuttleAxum {
-    // dotenv().ok();
+    let config = Config::init(secrets);
 
-    let db_url = secrets
-        .get("DATABASE_URL")
-        .expect("Missing secret DATABASE_URL");
+    let app_router = setup(config).await;
 
-    let migrate_db = secrets.get("MIGRATE_DB").expect("Missing MIGRATE_DB") == "ON";
+    // let address = std::net::SocketAddr::from(([0, 0, 0, 0], 3000));
 
-    let _pool = io::db::init(db_url, migrate_db).await;
+    // info!("Booting server on {}", address);
+
+    // let server = axum::Server::bind(&address).serve(app_router.into_make_service());
+
+    info!("Server ready.");
+
+    // server.await.expect("Server failed.");
+
+    Ok(app_router.into())
+}
+
+async fn setup(config: Config) -> Router {
+    let _pool = io::db::init(config.database_url, config.migrate_db).await;
 
     let courses_kit = kits::Courses::new();
     let modules_kit = kits::Modules::new();
@@ -44,19 +75,9 @@ async fn shuttle(
         .nest("/api", api_router)
         .nest("/", web_kit.router());
 
-    // let address = std::net::SocketAddr::from(([0, 0, 0, 0], 3000));
-
-    // info!("Booting server on {}", address);
-
-    // let server = axum::Server::bind(&address).serve(app_router.into_make_service());
-
     status_kit
         .set_value(kits::StatusValue::Ready)
         .expect("Failed to set server status.");
 
-    info!("Server ready.");
-
-    // server.await.expect("Server failed.");
-
-    Ok(app_router.into())
+    app_router
 }

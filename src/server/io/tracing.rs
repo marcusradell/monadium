@@ -1,7 +1,7 @@
 use tracing::Level;
 use tracing_subscriber::FmtSubscriber;
 
-pub fn _init() {
+pub fn init() {
     let subscriber = FmtSubscriber::builder()
         .with_max_level(Level::INFO)
         .finish();
