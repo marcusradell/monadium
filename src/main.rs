@@ -8,8 +8,11 @@ use axum::Router;
 use server::kits;
 use tracing::info;
 
-// #[tokio::main]
-// async fn main() {
+#[cfg(not(feature = "shuttle"))]
+#[tokio::main]
+async fn main() {}
+
+#[cfg(feature = "shuttle")]
 #[shuttle_runtime::main]
 async fn shuttle(
     #[shuttle_secrets::Secrets] secrets: shuttle_secrets::SecretStore,
