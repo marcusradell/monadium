@@ -3,6 +3,7 @@ use std::sync::Arc;
 use super::result::{Error, Result};
 use sqlx::{postgres::PgPoolOptions, sqlx_macros::migrate, PgPool, Pool, Postgres};
 
+#[derive(Clone)]
 pub struct Repo {
     pub pool: Arc<PgPool>,
 }

@@ -44,11 +44,11 @@ async fn shuttle(
 }
 
 async fn setup(config: Config) -> Router {
-    let _repo = io::repo::Repo::init(config.database_url, config.migrate_db).await;
+    let repo = io::repo::Repo::init(config.database_url, config.migrate_db).await;
 
     let courses_kit = kits::Courses::new();
     let modules_kit = kits::Modules::new();
-    let challenges_kit = kits::Challenges::new();
+    let challenges_kit = kits::ChallengesKit::new(repo);
 
     let api_router = Router::new()
         .nest("/challenges", challenges_kit.router())
