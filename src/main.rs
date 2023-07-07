@@ -6,7 +6,6 @@ mod web;
 use crate::server::io::{self};
 use axum::Router;
 use server::kits;
-use sqlx::sqlx_macros::migrate;
 use tracing::info;
 // use tracing::{info, Level};
 // use tracing_subscriber::FmtSubscriber;
@@ -32,12 +31,7 @@ async fn shuttle(
 
     let migrate_db = secrets.get("MIGRATE_DB").expect("Missing MIGRATE_DB") == "ON";
 
-    let pool = io::db::init(db_url, migrate_db).await;
-
-    migrate!("db/migrations")
-        .run(&pool)
-        .await
-        .expect("Failed to run migrations.");
+    let _pool = io::db::init(db_url, migrate_db).await;
 
     let courses_kit = kits::Courses::new();
     let modules_kit = kits::Modules::new();

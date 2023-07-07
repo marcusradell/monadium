@@ -1,7 +1,5 @@
-use std::path::Path;
-
 use super::result::{Error, Result};
-use sqlx::{postgres::PgPoolOptions, Pool, Postgres};
+use sqlx::{postgres::PgPoolOptions, sqlx_macros::migrate, Pool, Postgres};
 
 #[tracing::instrument]
 pub async fn init(db_uri: String, migrate_db: bool) -> Pool<Postgres> {
@@ -30,11 +28,10 @@ pub async fn init(db_uri: String, migrate_db: bool) -> Pool<Postgres> {
 pub async fn migrate(pool: &Pool<Postgres>) -> Result<()> {
     tracing::info!("Migrations started...");
 
-    sqlx::migrate::Migrator::new(Path::new("./migrations"))
-        .await
-        .expect("Migrator could not be created.")
+    migrate!("db/migrations")
         .run(pool)
-        .await?;
+        .await
+        .expect("Failed to run migrations.");
 
     tracing::info!("Migrated DB!");
 
