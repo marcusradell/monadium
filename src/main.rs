@@ -44,7 +44,7 @@ async fn shuttle(
 }
 
 async fn setup(config: Config) -> Router {
-    let _pool = io::db::init(config.database_url, config.migrate_db).await;
+    let _repo = io::repo::Repo::init(config.database_url, config.migrate_db).await;
 
     let courses_kit = kits::Courses::new();
     let modules_kit = kits::Modules::new();
@@ -63,6 +63,7 @@ async fn setup(config: Config) -> Router {
         .nest("/api", api_router)
         .nest("/", web_kit.router());
 
+    // TODO: it's the best point in time I know right now to set status to ready, but probably room for improvement.
     status_kit
         .set_value(kits::StatusValue::Ready)
         .expect("Failed to set server status.");

@@ -12,3 +12,9 @@ pub use status::*;
 
 mod web;
 pub use web::*;
+
+pub struct Kits {}
+
+impl Kits {
+    pub fn init() {}
+}
