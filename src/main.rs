@@ -15,7 +15,7 @@ use tracing::info;
 // async fn main() {
 #[shuttle_runtime::main]
 async fn shuttle() -> shuttle_axum::ShuttleAxum {
-    dotenv().expect(".env file not found");
+    let _ = dotenv();
 
     // let subscriber = FmtSubscriber::builder()
     //     .with_max_level(Level::INFO)
