@@ -5,11 +5,11 @@ use axum::{
     Json, Router,
 };
 use serde::Serialize;
-use sqlx::{query_as, types::Uuid};
+use sqlx::query_as;
 
 #[derive(Serialize)]
 pub struct Challenge {
-    id: Uuid,
+    id: u64,
     name: String,
     content: String,
 }
@@ -25,20 +25,16 @@ impl ChallengesKit {
     }
 
     pub async fn get_all(&self) -> Result<Vec<Challenge>> {
-        let rows = query_as!(
-            Challenge,
-            "select id, name, content from challenges.challenges"
-        )
-        .fetch_all(self.repo.pool.as_ref())
-        .await?;
+        let rows = query_as!(Challenge, "select id, name, content from challenges")
+            .fetch_all(self.repo.pool.as_ref())
+            .await?;
 
         Ok(rows)
     }
 
-    pub async fn add(&self, id: Uuid, name: String, content: String) -> Result<()> {
+    pub async fn add(&self, name: String, content: String) -> Result<()> {
         sqlx::query!(
-            "insert into challenges.challenges (id, name, content) values ($1, $2, $3)",
-            id,
+            "insert into challenges (name, content) values ( ?, ?)",
             name,
             content
         )
@@ -64,7 +60,7 @@ impl ChallengesKit {
                     let this = self.clone();
 
                     || async move {
-                        this.add(Uuid::new_v4(), "Name".to_string(), "Content...".to_string())
+                        this.add("Name".to_string(), "Content...".to_string())
                             .await
                             .unwrap()
                     }

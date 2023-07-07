@@ -1,11 +1,11 @@
 use std::sync::Arc;
 
 use super::result::{Error, Result};
-use sqlx::{postgres::PgPoolOptions, sqlx_macros::migrate, PgPool, Pool, Postgres};
+use sqlx::{mysql::MySqlPoolOptions, sqlx_macros::migrate, MySqlPool};
 
 #[derive(Clone)]
 pub struct Repo {
-    pub pool: Arc<PgPool>,
+    pub pool: Arc<MySqlPool>,
 }
 
 impl Repo {
@@ -13,7 +13,7 @@ impl Repo {
     pub async fn init(db_uri: String, migrate_db: bool) -> Self {
         tracing::info!("DB initializing...");
 
-        let pool = PgPoolOptions::new().connect(&db_uri).await.unwrap();
+        let pool = MySqlPoolOptions::new().connect(&db_uri).await.unwrap();
 
         let _row: (i32,) = sqlx::query_as("SELECT 1")
             .fetch_one(&pool)
@@ -36,7 +36,7 @@ impl Repo {
     }
 }
 
-pub async fn migrate(pool: &Pool<Postgres>) -> Result<()> {
+pub async fn migrate(pool: &MySqlPool) -> Result<()> {
     tracing::info!("Migrations started...");
 
     migrate!("db/migrations")
