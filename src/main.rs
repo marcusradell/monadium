@@ -3,7 +3,7 @@
 mod server;
 mod web;
 
-use crate::server::io::{self};
+use crate::server::io;
 use axum::Router;
 use server::kits;
 use tracing::info;
