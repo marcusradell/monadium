@@ -3,9 +3,8 @@
 mod server;
 mod web;
 
-use crate::server::io;
+use crate::server::io::{self};
 use axum::Router;
-use dotenvy::dotenv;
 use server::kits;
 use tracing::info;
 // use tracing::{info, Level};
@@ -14,8 +13,10 @@ use tracing::info;
 // #[tokio::main]
 // async fn main() {
 #[shuttle_runtime::main]
-async fn shuttle() -> shuttle_axum::ShuttleAxum {
-    dotenv().ok();
+async fn shuttle(
+    #[shuttle_secrets::Secrets] secrets: shuttle_secrets::SecretStore,
+) -> shuttle_axum::ShuttleAxum {
+    // dotenv().ok();
 
     // let subscriber = FmtSubscriber::builder()
     //     .with_max_level(Level::INFO)
@@ -24,7 +25,13 @@ async fn shuttle() -> shuttle_axum::ShuttleAxum {
     // tracing::subscriber::set_global_default(subscriber)
     //     .expect("Failed to set global default tracing subscriber.");
 
-    let _pool = io::db::init().await;
+    let db_url = secrets
+        .get("DATABASE_URL")
+        .expect("Missing secret DATABASE_URL");
+
+    let migrate_db = secrets.get("MIGRATE_DB").expect("Missing MIGRATE_DB") == "ON";
+
+    let _pool = io::db::init(db_url, migrate_db).await;
 
     let courses_kit = kits::Courses::new();
     let modules_kit = kits::Modules::new();

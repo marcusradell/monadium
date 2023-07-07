@@ -1,17 +1,11 @@
 use std::path::Path;
 
-use super::{
-    env::ensure_env,
-    result::{Error, Result},
-};
+use super::result::{Error, Result};
 use sqlx::{postgres::PgPoolOptions, Pool, Postgres};
 
 #[tracing::instrument]
-pub async fn init() -> Pool<Postgres> {
+pub async fn init(db_uri: String, migrate_db: bool) -> Pool<Postgres> {
     tracing::info!("DB initializing...");
-
-    let db_uri = ensure_env("DATABASE_URL");
-    let migrate_db = ensure_env("MIGRATE_DB") == "ON";
 
     let pool = PgPoolOptions::new().connect(&db_uri).await.unwrap();
 
