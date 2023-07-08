@@ -20,7 +20,7 @@ async fn main() {
 
     let address = std::net::SocketAddr::from(([0, 0, 0, 0], 3000));
 
-    info!("Booting server on {}", address);
+    info!("Booting server on http://{}", address);
 
     let server = axum::Server::bind(&address).serve(app_router.into_make_service());
 
