@@ -28,8 +28,8 @@ pub fn App(cx: Scope) -> Element {
                 Study {
                     title: "Your First Program"
                     Challenge {
-                        title: "Hi!",
-                        assignment: "Write a program that outputs 'Hi!'."
+                        name: "Hi!",
+                        content: "Write a program that outputs 'Hi!'."
                     }
                     CodeBlockExample {
                         code: HI_CODE
@@ -42,8 +42,8 @@ pub fn App(cx: Scope) -> Element {
                 Study {
                     title: "Defining Data"
                     Challenge {
-                        title: "Variables",
-                        assignment: "Declare immutable, mutable, constant, and shadowed variables."
+                        name: "Variables",
+                        content: "Declare immutable, mutable, constant, and shadowed variables."
                     }
                 }
             }
