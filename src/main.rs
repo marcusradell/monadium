@@ -50,7 +50,7 @@ async fn setup(config: Config) -> Router {
 
     let api_router = Router::new().nest("/challenges", kits.challenges.router());
 
-    let status_kit = kits::Status::new();
+    let status_kit = kits::StatusKit::new();
     let web_kit = kits::Web::new();
 
     let app_router = Router::new()

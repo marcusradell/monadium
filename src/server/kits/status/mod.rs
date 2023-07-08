@@ -4,6 +4,8 @@ use crate::{io::result::Result, server::io::result::Error};
 use axum::{routing::get, Json, Router};
 use serde::Serialize;
 
+use super::KitRouter;
+
 #[derive(Clone, Serialize)]
 pub enum StatusValue {
     Booting,
@@ -13,11 +15,11 @@ pub enum StatusValue {
 }
 
 #[derive(Clone)]
-pub struct Status {
+pub struct StatusKit {
     value: Arc<Mutex<StatusValue>>,
 }
 
-impl Status {
+impl StatusKit {
     pub fn new() -> Self {
         Self {
             value: Arc::new(Mutex::new(StatusValue::Booting)),
@@ -36,8 +38,10 @@ impl Status {
 
         Ok(())
     }
+}
 
-    pub fn router(&self) -> Router {
+impl KitRouter for StatusKit {
+    fn router(&self) -> Router {
         Router::new().route(
             "/",
             get({
