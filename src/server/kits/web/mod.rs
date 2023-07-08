@@ -13,15 +13,15 @@ async fn web_endpoint() -> Html<String> {
     Html(dioxus_ssr::render(&app))
 }
 
-pub struct Web {}
+pub struct WebKit {}
 
-impl Web {
+impl WebKit {
     pub fn new() -> Self {
         Self {}
     }
 }
 
-impl KitRouter for Web {
+impl KitRouter for WebKit {
     fn router(&self) -> Router {
         Router::new()
             .route("/", get(web_endpoint))

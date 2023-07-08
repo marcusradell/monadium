@@ -50,16 +50,13 @@ async fn setup(config: Config) -> Router {
 
     let api_router = Router::new().nest("/challenges", kits.challenges.router());
 
-    let status_kit = kits::StatusKit::new();
-    let web_kit = kits::Web::new();
-
     let app_router = Router::new()
-        .nest("/status", status_kit.router())
+        .nest("/status", kits.status.router())
         .nest("/api", api_router)
-        .nest("/", web_kit.router());
+        .nest("/", kits.web.router());
 
     // TODO: it's the best point in time I know right now to set status to ready, but probably room for improvement.
-    status_kit
+    kits.status
         .set_value(kits::StatusValue::Ready)
         .expect("Failed to set server status.");
 
