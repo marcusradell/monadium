@@ -7,6 +7,8 @@ use axum::{
 use serde::Serialize;
 use sqlx::query_as;
 
+use super::Kit;
+
 #[derive(Serialize)]
 pub struct Challenge {
     id: u64,
@@ -43,8 +45,10 @@ impl ChallengesKit {
 
         Ok(())
     }
+}
 
-    pub fn router(&self) -> Router {
+impl Kit for ChallengesKit {
+    fn router(&self) -> Router {
         Router::new()
             .route(
                 "/get_all",

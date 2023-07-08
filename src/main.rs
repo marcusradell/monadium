@@ -6,7 +6,7 @@ mod web;
 use crate::server::io;
 use axum::Router;
 use server::io::config::Config;
-use server::kits;
+use server::kits::{self, Kit, Kits};
 use tracing::info;
 
 #[cfg(not(feature = "shuttle"))]
@@ -46,14 +46,9 @@ async fn shuttle(
 async fn setup(config: Config) -> Router {
     let repo = io::repo::Repo::init(config.database_url, config.migrate_db).await;
 
-    let courses_kit = kits::Courses::new();
-    let modules_kit = kits::Modules::new();
-    let challenges_kit = kits::ChallengesKit::new(repo);
+    let kits = Kits::new(&repo);
 
-    let api_router = Router::new()
-        .nest("/challenges", challenges_kit.router())
-        .nest("/courses", courses_kit.router())
-        .nest("/modules", modules_kit.router());
+    let api_router = Router::new().nest("/challenges", kits.challenges.router());
 
     let status_kit = kits::Status::new();
     let web_kit = kits::Web::new();
