@@ -7,7 +7,7 @@ use axum::{
 use serde::Serialize;
 use sqlx::query_as;
 
-use super::Kit;
+use super::KitRouter;
 
 #[derive(Serialize)]
 pub struct Challenge {
@@ -47,7 +47,7 @@ impl ChallengesKit {
     }
 }
 
-impl Kit for ChallengesKit {
+impl KitRouter for ChallengesKit {
     fn router(&self) -> Router {
         Router::new()
             .route(

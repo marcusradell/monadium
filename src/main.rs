@@ -6,7 +6,7 @@ mod web;
 use crate::server::io;
 use axum::Router;
 use server::io::config::Config;
-use server::kits::{self, Kit, Kits};
+use server::kits::{self, KitRouter, Kits};
 use tracing::info;
 
 #[cfg(not(feature = "shuttle"))]
