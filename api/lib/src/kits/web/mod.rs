@@ -6,11 +6,12 @@ async fn web_endpoint() -> &'static str {
     "<H1>TODO</H1>"
 }
 
+#[derive(Default)]
 pub struct WebKit {}
 
 impl WebKit {
     pub fn new() -> Self {
-        Self {}
+        Default::default()
     }
 }
 

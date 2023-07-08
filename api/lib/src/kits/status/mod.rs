@@ -5,24 +5,23 @@ use std::sync::{Arc, Mutex};
 
 use super::KitRouter;
 
-#[derive(Clone, Serialize)]
+#[derive(Clone, Serialize, Default)]
 pub enum StatusValue {
+    #[default]
     Booting,
     Ready,
     Unhealthy,
     _ShuttingDown,
 }
 
-#[derive(Clone)]
+#[derive(Clone, Default)]
 pub struct StatusKit {
     value: Arc<Mutex<StatusValue>>,
 }
 
 impl StatusKit {
     pub fn new() -> Self {
-        Self {
-            value: Arc::new(Mutex::new(StatusValue::Booting)),
-        }
+        Default::default()
     }
 
     pub async fn get_value(&self) -> StatusValue {
