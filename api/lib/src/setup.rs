@@ -14,8 +14,7 @@ pub async fn setup(config: Config) -> Router {
 
     let app_router = Router::new()
         .nest("/status", kits.status.router())
-        .nest("/api", api_router)
-        .nest("/", kits.web.router());
+        .nest("/api", api_router);
 
     // TODO: it's the best point in time I know right now to set status to ready, but probably room for improvement.
     kits.status

@@ -1,4 +1,4 @@
-use super::{ChallengesKit, StatusKit, WebKit};
+use super::{ChallengesKit, StatusKit};
 use crate::io::Repo;
 
 pub trait KitRouter {
@@ -7,7 +7,6 @@ pub trait KitRouter {
 
 pub struct Kits {
     pub status: StatusKit,
-    pub web: WebKit,
     pub challenges: ChallengesKit,
 }
 
@@ -15,7 +14,6 @@ impl Kits {
     pub fn new(repo: &Repo) -> Self {
         Self {
             status: StatusKit::new(),
-            web: WebKit::new(),
             challenges: ChallengesKit::new(repo.clone()),
         }
     }
