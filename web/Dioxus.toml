@@ -1,0 +1,45 @@
+[application]
+
+# App (Project) Name
+name = "monadium"
+
+# Dioxus App Default Platform
+# desktop, web, mobile, ssr
+default_platform = "web"
+
+# `build` & `serve` dist path
+out_dir = "dist"
+
+# Resource (public) file folder
+asset_dir = "public"
+
+[web.app]
+
+# HTML title tag content
+title = "Monadium.org"
+
+[web.watcher]
+
+# When watcher trigger, regenerate the `index.html`
+reload_html = true
+
+# Which files or dirs will be watcher monitoring
+watch_path = ["src", "public"]
+
+[web.resource]
+
+# CSS style file
+style = ["tailwind.css"]
+
+# Javascript code file
+script = []
+
+[web.resource.dev]
+
+# serve: [dev-server] only
+
+# CSS style file
+style = []
+
+# Javascript code file
+script = []

@@ -1,3 +1,5 @@
 target/
 Secrets*.toml
 .env
+dist/
+node_modules/

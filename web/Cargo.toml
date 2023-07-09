@@ -8,5 +8,7 @@ edition = "2021"
 [dependencies]
 dioxus = "0.3.2"
 dioxus-web = "0.3.2"
+log = "0.4.19"
 reqwest = { version = "0.11.18", features = ["json"] }
 serde = "1.0.167"
+wasm-logger = "0.2.0"
