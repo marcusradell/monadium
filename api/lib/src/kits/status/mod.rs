@@ -14,7 +14,7 @@ pub enum StatusValue {
     _ShuttingDown,
 }
 
-#[derive(Clone, Default)]
+#[derive(Clone, Serialize, Default)]
 pub struct StatusKit {
     value: Arc<Mutex<StatusValue>>,
 }
@@ -45,7 +45,7 @@ impl KitRouter for StatusKit {
             get({
                 let this = self.clone();
 
-                || async move { Json(this.get_value().await) }
+                || async move { Json(this) }
             }),
         )
     }

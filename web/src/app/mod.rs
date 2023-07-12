@@ -15,7 +15,7 @@ const HI_CODE: &str = r#"fn main() {
 
 #[derive(serde::Deserialize)]
 struct DogApi {
-    message: String,
+    value: String,
 }
 
 pub fn App(cx: Scope) -> Element {
@@ -23,7 +23,7 @@ pub fn App(cx: Scope) -> Element {
 
     let fut = use_future(cx, (), |_| async move {
         println!("Future begun...");
-        reqwest::get("https://dog.ceo/api/breeds/image/random/")
+        reqwest::get("http://localhost:3000/status")
             .await
             .unwrap()
             .json::<DogApi>()
@@ -37,11 +37,7 @@ pub fn App(cx: Scope) -> Element {
                 "Click to fetch another doggo"
             }
             div {
-                img {
-                    max_width: "500px",
-                    max_height: "500px",
-                    src: "{resp.message}",
-                }
+                resp.value.clone()
             }
         },
         Some(Err(_)) => rsx! { div { "loading dogs failed" } },
