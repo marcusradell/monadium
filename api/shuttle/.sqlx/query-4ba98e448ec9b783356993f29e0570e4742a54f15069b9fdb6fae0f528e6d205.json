@@ -1,0 +1,12 @@
+{
+  "db_name": "MySQL",
+  "query": "insert into challenges (name, content) values ( ?, ?)",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Right": 2
+    },
+    "nullable": []
+  },
+  "hash": "4ba98e448ec9b783356993f29e0570e4742a54f15069b9fdb6fae0f528e6d205"
+}

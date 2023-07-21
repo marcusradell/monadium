@@ -1,4 +1,5 @@
-/target
+target/
+Secrets*.toml
 .env
-Secrets.toml
-Secrets.dev.toml
+dist/
+node_modules/

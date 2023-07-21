@@ -1,0 +1,14 @@
+{
+  "name": "web",
+  "version": "1.0.0",
+  "description": "",
+  "main": "",
+  "scripts": {
+    "tailwind": "tailwindcss -i ./styles.css -o ./public/tailwind.css --watch"
+  },
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "tailwindcss-animated": "^1.0.1"
+  }
+}
