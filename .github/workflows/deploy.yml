@@ -12,20 +12,18 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Install Rust
-        uses: actions-rs/toolchain@v1
-        with:
-          profile: minimal
-          toolchain: stable
+      - name: Cache Rust
+        uses: swatinem/rust-cache@v2
+        # How do I use workspaces settings?
+        # with:
+        #   workspaces:
 
-      - name: Build server
-        run: cargo build --release
+      - run: rustup toolchain install stable --profile minimal --target wasm32-unknown-unknown --no-self-update
 
-      - name: Install Shuttle CLI
-        run: cargo install cargo-shuttle
+      - run: cargo build --release
 
-      - name: Login to Shuttle
-        run: cargo shuttle login --api-key ${{ secrets.SHUTTLE_TOKEN }}
+      - run: cargo install cargo-shuttle
 
-      - name: Deploy to Shuttle
-        run: cargo shuttle deploy
+      - run: cargo shuttle login --api-key ${{ secrets.SHUTTLE_TOKEN }}
+
+      - run: cargo shuttle deploy
