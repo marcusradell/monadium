@@ -27,7 +27,7 @@ jobs:
 
       - run: cargo build --release
 
-      - run: cargo install cargo-shuttle
+      - run: cargo install cargo-shuttle --locked
 
       - run: cargo shuttle login --api-key ${{ secrets.SHUTTLE_TOKEN }}
 
